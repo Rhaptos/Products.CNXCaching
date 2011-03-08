@@ -1,3 +1,7 @@
 
 def initialize(context):
-    pass
+    import module
+    import httpcachemanager
+    
+    # uncomment this to enable purge logging
+    import purgelogging
