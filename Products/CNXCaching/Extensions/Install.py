@@ -27,17 +27,17 @@ def install(self, reinstall=False):
     portal = urltool.getPortalObject()
 
     # setup tool prep
-    setup_tool = getToolByName(portal, 'portal_setup')
-    prevcontext = setup_tool.getImportContextID()
-    setup_tool.setImportContext('profile-CMFPlone:plone')   # get Plone steps registered, in case they're not
-    setup_tool.setImportContext('profile-Products.%s:default' % PROJECTNAME)  # our profile and steps
+    #setup_tool = getToolByName(portal, 'portal_setup')
+    #prevcontext = setup_tool.getImportContextID()
+    #setup_tool.setImportContext('profile-CMFPlone:plone')   # get Plone steps registered, in case they're not
+    #setup_tool.setImportContext('profile-Products.%s:default' % PROJECTNAME)  # our profile and steps
 
     # run all import steps
-    status = setup_tool.runAllImportSteps()
-    log(status['messages'], out)
+    #status = setup_tool.runAllImportSteps()
+    #log(status['messages'], out)
 
     # setup tool "teardown"
-    setup_tool.setImportContext(prevcontext)
+    #setup_tool.setImportContext(prevcontext)
 
     # add new cache policies
     policy_utils.addCachePolicies(self, out)

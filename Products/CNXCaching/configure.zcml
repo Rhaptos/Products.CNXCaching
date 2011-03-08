@@ -3,13 +3,5 @@
            xmlns:browser="http://namespaces.zope.org/browser"
            i18n_domain="rhaptos">
 
-  <genericsetup:registerProfile
-      name="default"
-      title="Products.CNXCaching"
-      directory="profiles/default"
-      description="Extension profile for Products.CNXCaching."
-      provides="Products.GenericSetup.interfaces.EXTENSION"
-      />
-
 </configure>
 

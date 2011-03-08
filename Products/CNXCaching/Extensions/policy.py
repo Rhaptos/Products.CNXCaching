@@ -11,6 +11,92 @@ POLICY_TITLE = "CNX Caching Settings"
 
 def addCacheRules(rules):
 
+    id = 'cnx-collection'
+    if id not in rules.objectIds():
+        rules.invokeFactory(id=id, type_name='ContentCacheRule')
+        rule = getattr(rules, id)
+        rule.setTitle('Cache for CNX Collection')
+        rule.setContentTypes(['Collection'])
+        rule.setDefaultView(True)
+        rule.setTemplates(['collection_view'])
+        rule.setCacheStop(['portal_status_message','statusmessages'])
+        rule.setLastModifiedExpression('python:object.modified()')
+        rule.setHeaderSetIdAnon('cache-anon-forever')
+        rule.setHeaderSetIdAuth('cache-with-etag')
+        rule.setEtagComponents(['member','catalog_modified','language','gzip','skin','object_locked'])
+        rule.setEtagRequestValues([])
+        rule.setEtagTimeout(3600)
+        rule.setPurgeExpression('')
+        rule.setVaryExpression('string: X-Anonymouos')
+
+    id = 'cnx-lens'
+    if id not in rules.objectIds():
+        rules.invokeFactory(id=id, type_name='ContentCacheRule')
+        rule = getattr(rules, id)
+        rule.setTitle('Cache for Lens, Lenses')
+        rule.setContentTypes(['ContentSelectionLens', 'LensMajorContainer', 'LensRedirectContainer'])
+        rule.setDefaultView(True)
+        rule.setTemplates(['lenses_listing', 'lens_view'])
+        rule.setCacheStop(['portal_status_message','statusmessages'])
+        rule.setLastModifiedExpression('python:object.modified()')
+        rule.setHeaderSetIdAnon('cache-anon-forever')
+        rule.setHeaderSetIdAuth('cache-with-etag')
+        rule.setEtagComponents(['member','catalog_modified','language','gzip','skin','object_locked'])
+        rule.setEtagRequestValues([])
+        rule.setEtagTimeout(3600)
+        rule.setPurgeExpression('')
+        rule.setVaryExpression('string: X-Anonymouos')
+
+    id = 'cnx-lens-atom'
+    if id not in rules.objectIds():
+        rules.invokeFactory(id=id, type_name='ContentCacheRule')
+        rule = getattr(rules, id)
+        rule.setTitle('Cache for Lens ATOM')
+        rule.setContentTypes(['ContentSelectionLens', 'LensMajorContainer', 'LensRedirectContainer'])
+        rule.setDefaultView(True)
+        rule.setTemplates(['atom'])
+        rule.setCacheStop(['portal_status_message','statusmessages'])
+        rule.setLastModifiedExpression('python:object.modified()')
+        rule.setHeaderSetIdAnon('cache-anon-forever')
+        rule.setHeaderSetIdAuth('cache-anon-forever')
+        rule.setEtagComponents(['member','catalog_modified','language','gzip','skin','object_locked'])
+        rule.setEtagRequestValues([])
+        rule.setEtagTimeout(3600)
+        rule.setPurgeExpression('')
+
+    id = 'module'
+    if id not in rules.objectIds():
+        rules.invokeFactory(id=id, type_name='TemplateCacheRule')
+        rule = getattr(rules, id)
+        rule.setTitle('Module')
+        rule.setTemplates(['module_render', 'content_info'])
+        rule.setCacheStop(['portal_status_message','statusmessages','SearchableText'])
+        rule.setLastModifiedExpression('python:object.modified()')
+        rule.setHeaderSetIdAnon('cache-anon-forever')
+        rule.setHeaderSetIdAuth('cache-with-etag')
+        rule.setEtagComponents(['member','catalog_modified','language','gzip','skin'])
+        rule.setEtagRequestValues([])
+        rule.setEtagTimeout(3600)
+        rule.setVaryExpression('string: X-Anonymouos')
+
+    id = 'homepage'
+    if id not in rules.objectIds():
+        rules.invokeFactory(id=id, type_name='ContentCacheRule')
+        rule = getattr(rules, id)
+        rule.setTitle('Cache the frontpage specially')
+        rule.setContentTypes(['Plone Site'])
+        rule.setDefaultView(True)
+        rule.setTemplates([])
+        rule.setCacheStop(['portal_status_message','statusmessages'])
+        rule.setLastModifiedExpression('python:object.modified()')
+        rule.setHeaderSetIdAnon('cache-anon-1-hour')
+        rule.setHeaderSetIdAuth('cache-with-etag')
+        rule.setEtagComponents(['member','catalog_modified','language','gzip','skin','object_locked'])
+        rule.setEtagRequestValues([])
+        rule.setEtagTimeout(3600)
+        rule.setPurgeExpression('')
+        rule.setVaryExpression('string: X-Anonymouos')
+
     id = 'httpcache'
     if id not in rules.objectIds():
         rules.invokeFactory(id=id, type_name='PolicyHTTPCacheManagerCacheRule')
@@ -161,6 +247,50 @@ def addHeaderSets(header_sets):
         hs.setNoStore(0)
         hs.setPublic(0)
         hs.setPrivate(1)
+        hs.setNoTransform(0)
+        hs.setPreCheck(None)
+        hs.setPostCheck(None)
+
+    id = 'cache-anon-1-hour'
+    if not id in header_sets.objectIds():
+        header_sets.invokeFactory(id=id, type_name='HeaderSet')
+        hs = getattr(header_sets, id)
+        hs.setTitle('Cache anonymous view for 1 hour')
+        hs.setPageCache(0)
+        hs.setLastModified('delete')
+        hs.setEtag(0)
+        hs.setEnable304s(1)
+        hs.setVary(True)
+        hs.setMaxAge(0)
+        hs.setSMaxAge(3600)
+        hs.setMustRevalidate(1)
+        hs.setProxyRevalidate(0)
+        hs.setNoCache(0)
+        hs.setNoStore(0)
+        hs.setPrivate(0)
+        hs.setNoTransform(0)
+        hs.setPreCheck(None)
+        hs.setPostCheck(None)
+
+
+    id = 'cache-anon-forever'
+    if not id in header_sets.objectIds():
+        header_sets.invokeFactory(id=id, type_name='HeaderSet')
+        hs = getattr(header_sets, id)
+        hs.setTitle('Cache anonymous view forever')
+        hs.setPageCache(0)
+        hs.setLastModified('delete')
+        hs.setEtag(0)
+        hs.setEnable304s(1)
+        hs.setVary(True)
+        hs.setMaxAge(0)
+        hs.setSMaxAge(365*24*3600)
+        hs.setMustRevalidate(1)
+        hs.setProxyRevalidate(0)
+        hs.setNoCache(0)
+        hs.setNoStore(0)
+        hs.setPublic(1)
+        hs.setPrivate(0)
         hs.setNoTransform(0)
         hs.setPreCheck(None)
         hs.setPostCheck(None)
