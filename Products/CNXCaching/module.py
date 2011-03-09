@@ -10,6 +10,11 @@ orig_publishRevision = Repository.publishRevision
 
 
 def publishRevision(self, object, message):
+    stool = getToolByName(self, 'portal_squid', None)
+    if stool is None:
+        orig_publishRevision(self, object, message)
+        return
+
     ctool = getToolByName(self, 'content').catalog
     portal_url = getToolByName(self, 'portal_url')
 
@@ -22,6 +27,9 @@ def publishRevision(self, object, message):
     orig_publishRevision(self, object, message)
 
     ob = object.getPublishedObject()
+
+    # purge rss
+    stool.pruneUrls(['content/recent.rss','content/collections.rss'])
 
     # always purge latest and previous version
     path = portal_url.getRelativeUrl(ob)
@@ -39,9 +47,7 @@ def publishRevision(self, object, message):
 	# purge all latest modules that are part of this collection
 	paths.extend(['content/%s/latest/'%m for m in object.containedModuleIds()])
 
-    stool = getToolByName(self, 'portal_squid', None)
-    if stool is not None:
-	stool.pruneUrls(paths)
+    stool.pruneUrls(paths, 'PURGE_REGEXP')
 
 
 Repository.publishRevision = publishRevision

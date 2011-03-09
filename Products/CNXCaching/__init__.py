@@ -1,5 +1,6 @@
 
 def initialize(context):
+    import lens
     import module
     import httpcachemanager
     
