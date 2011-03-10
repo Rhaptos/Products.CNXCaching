@@ -1,5 +1,6 @@
 import logging
 from Products.CMFCore.utils import getToolByName
+from Products.CacheSetup.content.cache_tool import CacheTool
 from Products.PolicyHTTPCacheManager.PolicyHTTPCacheManager import PolicyHTTPCache
 
 logger = logging.getLogger('CNXCaching')
@@ -28,3 +29,14 @@ def ZCache_invalidate(self, ob):
 
 PolicyHTTPCache.ZCache_invalidate = ZCache_invalidate
 logger.info("Monkey patch PolicyHTTPCacheManager.ZCache_invalidate, disable purges for cnx files")
+
+
+orig_getUrlsToPurge = CacheTool.getUrlsToPurge
+
+def getUrlsToPurge(self, object):
+    try:
+	return orig_getUrlsToPurge(self, object)
+    except:
+	return []
+	
+logger.info("Monkey patch CacheTool.getUrlsToPurge, handle all exceptions")
