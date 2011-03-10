@@ -27,7 +27,7 @@ def addCacheRules(rules):
         rule.setEtagRequestValues([])
         rule.setEtagTimeout(3600)
         rule.setPurgeExpression('')
-        rule.setVaryExpression('string: X-Anonymouos')
+        rule.setVaryExpression('string: X-Anonymous, Accept-Encoding')
 
     id = 'cnx-lens'
     if id not in rules.objectIds():
@@ -45,7 +45,7 @@ def addCacheRules(rules):
         rule.setEtagRequestValues([])
         rule.setEtagTimeout(3600)
         rule.setPurgeExpression('')
-        rule.setVaryExpression('string: X-Anonymouos')
+        rule.setVaryExpression('string: X-Anonymous, Accept-Encoding')
 
     id = 'cnx-lens-atom'
     if id not in rules.objectIds():
@@ -77,7 +77,7 @@ def addCacheRules(rules):
         rule.setEtagComponents(['member','catalog_modified','language','gzip','skin'])
         rule.setEtagRequestValues([])
         rule.setEtagTimeout(3600)
-        rule.setVaryExpression('string: X-Anonymouos')
+        rule.setVaryExpression('string: X-Anonymous, Accept-Encoding')
 
     id = 'homepage'
     if id not in rules.objectIds():
@@ -95,7 +95,7 @@ def addCacheRules(rules):
         rule.setEtagRequestValues([])
         rule.setEtagTimeout(3600)
         rule.setPurgeExpression('')
-        rule.setVaryExpression('string: X-Anonymouos')
+        rule.setVaryExpression('string: X-Anonymous, Accept-Encoding')
 
     id = 'httpcache'
     if id not in rules.objectIds():
@@ -127,7 +127,8 @@ def addCacheRules(rules):
         rule.setEtagRequestValues(['month','year','orig_query'])
         rule.setEtagTimeout(3600)
         rule.setPurgeExpression('python:object.getImageAndFilePurgeUrls()')
-        
+        rule.setVaryExpression('string: X-Anonymous, Accept-Encoding')
+
     id = 'plone-containers'
     if id not in rules.objectIds():
         rules.invokeFactory(id=id, type_name='ContentCacheRule')
@@ -145,7 +146,7 @@ def addCacheRules(rules):
         rule.setEtagRequestValues(['b_start','month','year','orig_query'])
         rule.setEtagExpression('python:request.get(\'__cp\',None) is not None')
         rule.setEtagTimeout(3600)
-        
+
     id = 'plone-templates'
     if id not in rules.objectIds():
         rules.invokeFactory(id=id, type_name='TemplateCacheRule')
@@ -160,7 +161,7 @@ def addCacheRules(rules):
         rule.setEtagComponents(['member','catalog_modified','language','gzip','skin'])
         rule.setEtagRequestValues(['b_start','month','year','orig_query'])
         rule.setEtagTimeout(3600)
-    
+
     id = 'plone-rss'
     if id not in rules.objectIds():
         rules.invokeFactory(id=id, type_name='TemplateCacheRule')
