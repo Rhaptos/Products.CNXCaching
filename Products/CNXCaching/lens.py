@@ -20,7 +20,7 @@ def purgeContent(ob, stool):
 
     try:
 	content = content.getRhaptosObject(ob.getId(), 'latest').getTarget()
-    except KeyError:
+    except:
         return
 
     paths = ['content/%s/'%content.aq_parent.getId()]
