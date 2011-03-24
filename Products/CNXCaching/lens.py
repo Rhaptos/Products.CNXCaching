@@ -67,7 +67,11 @@ def objectRemovedEvent(ob, ev):
     if stool is None:
 	return
 
-    lens = ev.oldParent
+    #deleting from lens, or the whole lens?
+    if ob == ev.object:
+        lens = ev.oldParent
+    else:
+        lens = ev.object
 
     state = lens.review_state()
     lid = lens.getId()
