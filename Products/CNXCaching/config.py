@@ -1,0 +1,5 @@
+""" """
+
+PROJECTNAME = "CNXCaching"
+
+GLOBALS = globals()
