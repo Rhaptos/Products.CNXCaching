@@ -27,7 +27,7 @@ def addCacheRules(rules):
         rule.setEtagRequestValues([])
         rule.setEtagTimeout(3600)
         rule.setPurgeExpression('')
-        rule.setVaryExpression('string: X-Anonymous, Accept-Encoding')
+        rule.setVaryExpression('string: X-Anonymous, Accept-Encoding, X-Content-Type')
 
     id = 'cnx-lens'
     if id not in rules.objectIds():
