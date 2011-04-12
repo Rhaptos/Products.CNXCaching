@@ -104,6 +104,12 @@ sub annotate_request {
     if (!(req.http.Authorization || req.http.cookie ~ "(^|.*; )__ac=" || req.http.cookie ~ "(^|.*; )cosign")) {
         set req.http.X-Anonymous = "True";
     }
+    if (req.http.Accept ~ "application\/xhtml\+xml") {
+        set req.http.X-Content-Type = "application/xhtml+xml";
+    } else {
+        set req.http.X-Content-Type = "text/html";
+    }
+
 }
 
 # The varnish response should always declare itself to be fresh
