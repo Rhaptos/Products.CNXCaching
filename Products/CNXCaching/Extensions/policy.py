@@ -77,7 +77,7 @@ def addCacheRules(rules):
         rule.setEtagComponents(['member','catalog_modified','language','gzip','skin'])
         rule.setEtagRequestValues([])
         rule.setEtagTimeout(3600)
-        rule.setVaryExpression('string: X-Anonymous, Accept-Encoding','X-Content-Type')
+        rule.setVaryExpression('string: X-Anonymous, Accept-Encoding, X-Content-Type')
 
     id = 'homepage'
     if id not in rules.objectIds():
