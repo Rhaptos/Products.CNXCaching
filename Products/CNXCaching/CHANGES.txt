@@ -1,3 +1,6 @@
+CNXCaching-0.2
+  - implement X-Content-Type for collection page as well
+
 CNXCaching-0.1
   - initial release
 
